@@ -7,17 +7,16 @@ import TodoList from "./components/TodoList";
 
 import * as styles from "./styles.css";
 
-export default function main({DOM, actions, store}) {
+export default function main({DOM, actions, states}) {
     const reducer = makeReducer(actions);
     return {
-        DOM: store
-            .map((props) => (
+        DOM: states.map((props) => (
             d.div("", {class: {[styles.app]: true}}, [
                 Title("Todo List", actions),
                 NewTodo(props.get("newTodo"), actions),
                 TodoList(props.get("todos"), actions),
             ])
         )),
-        store: reducer,
+        states: reducer,
     };
 }

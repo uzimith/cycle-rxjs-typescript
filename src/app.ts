@@ -1,7 +1,7 @@
 import run from "@cycle/rxjs-run";
 import {makeDOMDriver} from "@cycle/dom";
-import {makeStateStoreDriver} from "./drivers/stateStore";
-import {makeActionsDriver} from "./drivers/actions";
+import {createStore} from "./drivers/stateStore";
+import logger from "./middlewares/logger";
 import main from "./main";
 
 import EventModule from "snabbdom/modules/eventlisteners";
@@ -14,17 +14,17 @@ import DatasetModule from "snabbdom/modules/dataset";
 import {List} from "immutable";
 import Todo from "./models/Todo";
 
+const {makeActionsDriver, makeStatesDriver} = createStore([logger]);
+
 run(main, {
     DOM: makeDOMDriver("#app", {
         modules: [EventModule, ClassModule, PropsModule, AttrsModule, StyleModule, DatasetModule],
     }),
-    actions: makeActionsDriver({
-        addTodo: null,
-        updateNewTodoTitle: null,
-    }, {
-        debug: true,
-    }),
-    store: makeStateStoreDriver({
+    actions: makeActionsDriver([
+        "addTodo",
+        "updateNewTodoTitle",
+    ]),
+    states: makeStatesDriver({
         todos: List.of(new Todo({title: "A"}), new Todo({title: "B"})),
         newTodo: new Todo({title: "newTodoTitle"}),
     }),
