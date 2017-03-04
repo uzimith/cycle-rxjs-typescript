@@ -21,7 +21,7 @@ module.exports = function(env = {}) {
             __filename: false
         },
         entry: {
-            main: './src/main.ts',
+            app: './src/app.ts',
         },
         resolve: {
             extensions: ['*', '.css', '.js', '.ts']
