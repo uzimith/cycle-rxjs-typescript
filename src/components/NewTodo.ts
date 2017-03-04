@@ -1,7 +1,8 @@
 import * as d from "@cycle/dom";
 import Todo from "../models/Todo";
+import Actions from "../actions";
 
-export default function NewTodo(newTodo: Todo, actions): d.VNode {
+export default function NewTodo(newTodo: Todo, actions: Actions): d.VNode {
     const addTodo = (event) => {
         event.preventDefault();
         actions.addTodo.next();

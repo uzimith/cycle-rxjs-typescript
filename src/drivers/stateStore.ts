@@ -1,19 +1,17 @@
 import {Observable, Subject} from "rxjs/Rx";
 import xs from "xstream";
 import * as Immutable from "immutable";
+import Actions from "../Actions";
 
 export function createStore(middlewares) {
-    const makeActionsDriver = (actionNames: string[]) => {
+    const makeActionsDriver = (actions: Actions) => {
         return () => {
-            const subjects = {};
-            actionNames.forEach((name) => {
-                const subject = new Subject();
+            return actions.map((subject, name) => {
                 const action = subject.map((payload) => ({type: name, payload}));
-                subjects[name] = middlewares.map((middleware) => middleware.patchAction)
-                    .reduce((actions, patch) => patch(actions), action)
+                return middlewares.map((middleware) => middleware.patchAction)
+                    .reduce((_action, patch) => patch(_action), action)
                 ;
             });
-            return subjects;
         };
     };
 
