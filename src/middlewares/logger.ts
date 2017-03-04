@@ -1,9 +1,11 @@
 const logger = {
     patchAction: (action) => action.do( ({type, payload}) => {
-        console.log(`[${type}]`, payload);
+        console.group(type);
+        console.log("payload", payload);
     }),
     patchState: (state) => state.do( (x) => {
-        console.log(x.toJS());
+        console.log("state", x.toJS());
+        console.groupEnd();
     }),
 };
 
