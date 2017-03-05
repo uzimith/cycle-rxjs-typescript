@@ -8,7 +8,7 @@
     "object-literal-sort-keys": false,
     "only-arrow-functions": false,
     "arrow-parens": false,
-    "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore", "allow-trailing-underscore"]
+    "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore", "allow-trailing-underscore", "allow-pascal-case"]
   },
   "jsRules": {
   },

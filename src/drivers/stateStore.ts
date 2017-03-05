@@ -6,12 +6,14 @@ import Actions from "../Actions";
 export function createStore(middlewares) {
     const makeActionsDriver = (actions: Actions) => {
         return () => {
-            return actions.map((subject, name) => {
+            Object.keys(actions).map(name => {
+                const subject = new Subject();
                 const action = subject.map((payload) => ({type: name, payload}));
-                return middlewares.map((middleware) => middleware.patchAction)
+                actions[name] = middlewares.map((middleware) => middleware.patchAction)
                     .reduce((_action, patch) => patch(_action), action)
                 ;
             });
+            return actions;
         };
     };
 
